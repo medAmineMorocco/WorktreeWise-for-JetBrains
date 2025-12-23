@@ -1,0 +1,8 @@
+<idea-plugin>
+    <id>com.worktreewise.jetbrains</id>
+    <name>WorktreeWise for JetBrains</name>
+
+    <vendor email="contact@worktreewise.com">WorktreeWise</vendor>
+
+    <depends>com.intellij.modules.platform</depends>
+</idea-plugin>
