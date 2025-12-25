@@ -5,4 +5,26 @@
     <vendor email="contact@worktreewise.com">WorktreeWise</vendor>
 
     <depends>com.intellij.modules.platform</depends>
+
+    <actions>
+        <group
+                id="WorktreeWise.Menu"
+                text="WorktreeWise"
+                description="WorktreeWise actions"
+                popup="true"
+                icon="/icons/icon.svg">
+            <add-to-group group-id="ToolsMenu" anchor="last"/>
+        </group>
+
+        <action
+                id="WorktreeWiseSwitch"
+                class="com.worktreewise.actions.WorktreeWiseSwitchAction"
+                text="Open Worktree"
+                description="Switch between Git worktrees">
+            <add-to-group group-id="WorktreeWise.Menu" anchor="first"/>
+            <!-- Assign a default shortcut -->
+            <keyboard-shortcut keymap="$default" first-keystroke="alt shift W"/>
+        </action>
+    </actions>
+
 </idea-plugin>
