@@ -19,12 +19,22 @@
         <action
                 id="WorktreeWiseSwitch"
                 class="com.worktreewise.actions.WorktreeWiseSwitchAction"
-                text="Open Worktree"
+                text="Switch Worktree"
                 description="Switch between Git worktrees">
             <add-to-group group-id="WorktreeWise.Menu" anchor="first"/>
             <!-- Assign a default shortcut -->
-            <keyboard-shortcut keymap="$default" first-keystroke="alt shift W"/>
+            <keyboard-shortcut keymap="$default" first-keystroke="shift S"/>
         </action>
+
+        <action
+                id="WorktreeWiseOpenProject"
+                class="com.worktreewise.actions.OpenInWorktreeWiseAction"
+                text="Open in WorktreeWise"
+                description="Open this project in WorktreeWise">
+            <add-to-group group-id="WorktreeWise.Menu" anchor="last"/>
+            <keyboard-shortcut keymap="$default" first-keystroke="shift W"/>
+        </action>
+
     </actions>
 
 </idea-plugin>
