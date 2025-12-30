@@ -11,6 +11,8 @@ import com.worktreewise.model.WorktreeInfo;
 import com.worktreewise.services.GitWorktreeService;
 
 import javax.swing.*;
+import java.awt.*;
+import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.List;
 
@@ -22,31 +24,50 @@ public class WorktreeWiseSwitchAction extends AnAction {
         if (project == null || project.getBasePath() == null) return;
 
         Path mainWorktree = Path.of(project.getBasePath());
-        List<WorktreeInfo> worktrees =
-                GitWorktreeService.listWorktrees(mainWorktree);
+        List<WorktreeInfo> worktrees = GitWorktreeService.listWorktrees(mainWorktree);
 
         JBList<WorktreeInfo> list = new JBList<>(worktrees);
         list.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 
-        list.setCellRenderer((lst, value, index, selected, focused) ->
-                new JLabel(value.getBranch() + "  —  " + value.getPath())
-        );
+        String currentPath = project.getBasePath();
+
+        // Highlight current worktree
+        for (int i = 0; i < worktrees.size(); i++) {
+            if (worktrees.get(i).getPath().equals(currentPath)) {
+                list.setSelectedIndex(i);
+                list.ensureIndexIsVisible(i);
+                break;
+            }
+        }
+
+        list.setCellRenderer((lst, value, index, selected, focused) -> {
+            JLabel label = new JLabel(value.getBranch() + "  —  " + value.getPath());
+            if (value.getPath().equals(currentPath)) {
+                label.setOpaque(true);
+                label.setBackground(new Color(200, 230, 250)); // custom highlight
+                label.setForeground(Color.GRAY); // indicate disabled
+                label.setEnabled(false);
+            }
+            return label;
+        });
 
         JBPopupFactory.getInstance()
                       .createListPopupBuilder(list)
                       .setTitle("Switch Git Worktree")
                       .setItemChoosenCallback(() -> {
                           WorktreeInfo selected = list.getSelectedValue();
-                          if (selected == null) return;
+                          if (selected == null || selected.getPath().equals(currentPath)) return;
 
                           Path targetWorktree = Path.of(selected.getPath());
 
-                          // ✅ Copy .idea ONLY when chosen
-                          try {
-                              IdeaSettingsCopier.copyAll(mainWorktree, targetWorktree);
-                          } catch (Exception ignored) {}
+                          // ✅ Copy .idea only if it does NOT exist in target
+                          Path targetIdea = targetWorktree.resolve(".idea");
+                          if (!Files.exists(targetIdea)) {
+                              try {
+                                  IdeaSettingsCopier.copyAll(mainWorktree, targetWorktree);
+                              } catch (Exception ignored) {}
+                          }
 
-                          // ✅ Open the worktree (single execution guaranteed)
                           WorktreeOpener.open(project, targetWorktree);
                       })
                       .createPopup()
