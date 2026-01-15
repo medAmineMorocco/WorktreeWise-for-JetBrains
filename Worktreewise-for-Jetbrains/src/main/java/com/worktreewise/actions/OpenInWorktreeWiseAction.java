@@ -4,7 +4,9 @@ import com.intellij.openapi.actionSystem.AnAction;
 import com.intellij.openapi.actionSystem.AnActionEvent;
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.ui.Messages;
+import com.worktreewise.idea.WorktreeWiseLicense;
 import com.worktreewise.idea.WorktreeWiseLocator;
+import com.worktreewise.notifications.LicenceNotifications;
 
 import java.nio.file.Path;
 import java.util.ArrayList;
@@ -14,6 +16,12 @@ public class OpenInWorktreeWiseAction extends AnAction {
 
     @Override
     public void actionPerformed(AnActionEvent e) {
+
+        if (!WorktreeWiseLicense.isLicensed()) {
+            LicenceNotifications.showLicenseRequired();
+            return;
+        }
+
         Project project = e.getProject();
         if (project == null) return;
 

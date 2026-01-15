@@ -3,12 +3,16 @@ package com.worktreewise.actions;
 import com.intellij.openapi.actionSystem.AnAction;
 import com.intellij.openapi.actionSystem.AnActionEvent;
 import com.intellij.openapi.project.Project;
-import com.intellij.openapi.ui.popup.JBPopupFactory;
+import com.intellij.openapi.ui.popup.IPopupChooserBuilder;
+import com.intellij.openapi.ui.popup.PopupChooserBuilder;
 import com.intellij.ui.components.JBList;
 import com.worktreewise.idea.IdeaSettingsCopier;
 import com.worktreewise.idea.WorktreeOpener;
+import com.worktreewise.idea.WorktreeWiseLicense;
 import com.worktreewise.model.WorktreeInfo;
+import com.worktreewise.notifications.LicenceNotifications;
 import com.worktreewise.services.GitWorktreeService;
+import org.jetbrains.annotations.NotNull;
 
 import javax.swing.*;
 import java.awt.*;
@@ -19,7 +23,13 @@ import java.util.List;
 public class WorktreeWiseSwitchAction extends AnAction {
 
     @Override
-    public void actionPerformed(AnActionEvent e) {
+    public void actionPerformed(@NotNull AnActionEvent e) {
+
+        if (!WorktreeWiseLicense.isLicensed()) {
+            LicenceNotifications.showLicenseRequired();
+            return;
+        }
+
         Project project = e.getProject();
         if (project == null || project.getBasePath() == null) return;
 
@@ -51,26 +61,28 @@ public class WorktreeWiseSwitchAction extends AnAction {
             return label;
         });
 
-        JBPopupFactory.getInstance()
-                      .createListPopupBuilder(list)
-                      .setTitle("Switch Git Worktree")
-                      .setItemChoosenCallback(() -> {
-                          WorktreeInfo selected = list.getSelectedValue();
-                          if (selected == null || selected.getPath().equals(currentPath)) return;
+        IPopupChooserBuilder<WorktreeInfo> builder =
+                new PopupChooserBuilder<>(list)
+                        .setTitle("Switch Git Worktree")
+                        .setItemChosenCallback((WorktreeInfo selected) -> {
 
-                          Path targetWorktree = Path.of(selected.getPath());
+                            if (selected == null ||
+                                    selected.getPath().equals(currentPath)) return;
 
-                          // ✅ Copy .idea only if it does NOT exist in target
-                          Path targetIdea = targetWorktree.resolve(".idea");
-                          if (!Files.exists(targetIdea)) {
-                              try {
-                                  IdeaSettingsCopier.copyAll(mainWorktree, targetWorktree);
-                              } catch (Exception ignored) {}
-                          }
+                            Path targetWorktree = Path.of(selected.getPath());
 
-                          WorktreeOpener.open(project, targetWorktree);
-                      })
-                      .createPopup()
-                      .showInFocusCenter();
+                            // ✅ Copy .idea only if it does NOT exist in target
+                            Path targetIdea = targetWorktree.resolve(".idea");
+                            if (!Files.exists(targetIdea)) {
+                                try {
+                                    IdeaSettingsCopier.copyAll(mainWorktree, targetWorktree);
+                                } catch (Exception ignored) {}
+                            }
+
+                            WorktreeOpener.open(project, targetWorktree);
+                        });
+
+        builder.createPopup().showInFocusCenter();
+
     }
 }

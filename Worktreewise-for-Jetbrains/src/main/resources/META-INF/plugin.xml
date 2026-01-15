@@ -1,10 +1,57 @@
 <idea-plugin>
     <id>com.worktreewise.jetbrains</id>
-    <name>WorktreeWise for JetBrains</name>
+    <name>WorktreeWise</name>
+    <version>1.0.0</version>
+    <vendor email="contact@worktreewise.com" url="https://www.worktreewise.com/?utm_source=worktreewise-for-jetbrains">WorktreeWise</vendor>
+    <category>Version Control</category>
 
-    <vendor email="contact@worktreewise.com">WorktreeWise</vendor>
 
-    <depends>com.intellij.modules.platform</depends>
+    <description>
+        <![CDATA[
+            <p>
+              Switch Git worktrees and open projects in WorktreeWise directly from your IDE.
+            </p>
+
+            <p>
+              Preserve bookmarks, run configurations, and IDE context while staying fast and productive.
+            </p>
+
+            <ul>
+              <li>
+                📘 <b>Documentation:</b>
+                <a href="https://docs.worktreewise.com/integrations/jetbrains-plugin/?utm_source=worktreewise-for-jetbrains" target="_blank">
+                  https://docs.worktreewise.com/integrations/jetbrains-plugin
+                </a>
+              </li>
+              <li>
+                🔧 <b>Compatibility:</b>
+                All JetBrains IDEs built on the IntelliJ Platform
+                <b>2021.1 – 2025.2</b>
+              </li>
+              <li>
+                🔑 <b>License:</b>
+                Free for PRO / PRO PLUS users.
+                <a href="https://www.worktreewise.com/pricing" target="_blank">
+                  Buy a license on worktreewise.com
+                </a>
+              </li>
+              <li>
+                🧭 <b>How to use:</b>
+                Select <b>Tools → WorktreeWise</b> in the IDE menu.
+                <p>
+                    <img src="https://www.worktreewise.com/images/plugin/worktreewise-for-jetbrains-plugin.png"
+                         width="400"
+                         alt="WorktreeWise Plugin"/>
+                </p>
+              </li>
+            </ul>
+        ]]>
+    </description>
+
+
+    <depends>com.intellij.modules.vcs</depends>
+
+    <idea-version since-build="211" until-build="252.*"/>
 
     <actions>
         <group
@@ -36,5 +83,12 @@
         </action>
 
     </actions>
+
+    <extensions defaultExtensionNs="com.intellij">
+        <notificationGroup
+                id="WorktreeWise Licensing"
+                displayType="BALLOON"
+                isLogByDefault="false"/>
+    </extensions>
 
 </idea-plugin>
