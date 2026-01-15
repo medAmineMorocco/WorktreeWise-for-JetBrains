@@ -51,7 +51,7 @@
 
     <depends>com.intellij.modules.vcs</depends>
 
-    <idea-version since-build="211" until-build="252.*"/>
+    <idea-version since-build="221" until-build="252.*"/>
 
     <actions>
         <group

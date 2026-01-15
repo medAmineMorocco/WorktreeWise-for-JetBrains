@@ -23,7 +23,7 @@ intellij {
 }
 
 tasks.withType(org.jetbrains.intellij.tasks.PatchPluginXmlTask) {
-    sinceBuild.set("211")
+    sinceBuild.set("221")
     untilBuild.set("252.*")
 }
 
