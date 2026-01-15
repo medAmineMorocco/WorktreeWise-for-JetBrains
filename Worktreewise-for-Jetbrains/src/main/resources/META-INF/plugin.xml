@@ -50,6 +50,7 @@
 
 
     <depends>com.intellij.modules.vcs</depends>
+    <incompatible-with>com.jetbrains.rust</incompatible-with>
 
     <idea-version since-build="221" until-build="252.*"/>
 
