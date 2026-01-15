@@ -1,7 +1,7 @@
 <idea-plugin>
     <id>com.worktreewise.jetbrains</id>
     <name>WorktreeWise</name>
-    <version>1.0.0</version>
+    <version>1.0.1</version>
     <vendor email="contact@worktreewise.com" url="https://www.worktreewise.com/?utm_source=worktreewise-for-jetbrains">WorktreeWise</vendor>
     <category>Version Control</category>
 
