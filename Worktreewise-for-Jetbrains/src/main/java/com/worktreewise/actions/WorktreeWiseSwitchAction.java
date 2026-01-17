@@ -16,6 +16,7 @@ import org.jetbrains.annotations.NotNull;
 
 import javax.swing.*;
 import java.awt.*;
+import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.List;
@@ -76,7 +77,9 @@ public class WorktreeWiseSwitchAction extends AnAction {
                             if (!Files.exists(targetIdea)) {
                                 try {
                                     IdeaSettingsCopier.copyAll(mainWorktree, targetWorktree);
-                                } catch (Exception ignored) {}
+                                } catch (IOException ex) {
+                                    throw new RuntimeException(ex);
+                                }
                             }
 
                             WorktreeOpener.open(project, targetWorktree);

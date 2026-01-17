@@ -17,13 +17,13 @@ java {
 }
 
 intellij {
-    version = '2021.3.3'
+    version = '2022.2.5'
     type = 'IC'
     plugins = [] // do NOT auto-load extra plugins
 }
 
 tasks.withType(org.jetbrains.intellij.tasks.PatchPluginXmlTask) {
-    sinceBuild.set("221")
+    sinceBuild.set("222")
     untilBuild.set("252.*")
 }
 
