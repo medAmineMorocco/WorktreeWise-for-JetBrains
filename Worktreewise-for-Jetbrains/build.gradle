@@ -1,6 +1,6 @@
 plugins {
     id 'java'
-    id 'org.jetbrains.intellij' version '1.17.4'
+    id 'org.jetbrains.intellij' version '1.16.0'
 }
 
 group = 'com.worktreewise'
@@ -12,7 +12,7 @@ repositories {
 
 java {
     toolchain {
-        languageVersion = JavaLanguageVersion.of(11)
+        languageVersion = JavaLanguageVersion.of(17)
     }
 }
 
@@ -25,6 +25,10 @@ intellij {
 tasks.withType(org.jetbrains.intellij.tasks.PatchPluginXmlTask) {
     sinceBuild.set("222")
     untilBuild.set("252.*")
+}
+
+tasks.named("runPluginVerifier", org.jetbrains.intellij.tasks.RunPluginVerifierTask) {
+    ideVersions.set(["2022.3", "2023.2", "2024.2", "2025.1"]) // IDE versions to test
 }
 
 dependencies {
