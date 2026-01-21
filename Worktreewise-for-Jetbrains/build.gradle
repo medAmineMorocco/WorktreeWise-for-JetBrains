@@ -4,7 +4,7 @@ plugins {
 }
 
 group = 'com.worktreewise'
-version = '1.0.3'
+version = '0.1.0-alpha'
 
 repositories {
     mavenCentral()
