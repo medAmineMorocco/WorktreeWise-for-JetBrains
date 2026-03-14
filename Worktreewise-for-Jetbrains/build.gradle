@@ -24,7 +24,7 @@ intellij {
 
 tasks.withType(org.jetbrains.intellij.tasks.PatchPluginXmlTask) {
     sinceBuild.set("222")
-    untilBuild.set("252.*")
+    untilBuild.set("253.*")
 }
 
 tasks.named("runPluginVerifier", org.jetbrains.intellij.tasks.RunPluginVerifierTask) {

@@ -26,7 +26,7 @@
               <li>
                 🔧 <b>Compatibility:</b>
                 All JetBrains IDEs built on the IntelliJ Platform
-                <b>2022.2.* – 2025.2.*</b>
+                <b>2022.2.* – 2025.3.*</b>
               </li>
               <li>
                 🔑 <b>License:</b>
@@ -52,7 +52,7 @@
     <depends>com.intellij.modules.vcs</depends>
     <incompatible-with>com.jetbrains.rust</incompatible-with>
 
-    <idea-version since-build="222" until-build="252.*"/>
+    <idea-version since-build="222" until-build="253.*"/>
 
     <actions>
         <group
